@@ -1,34 +1,174 @@
-/* Add CSS stylesheet */
-.banner{
-    height: 10%;
-    width: 100%;
-    padding:0px;
-    background-color: lightgrey;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 120%;
-    text-align: center;
-    position: fixed;
-    top: 0;
-    left:0;
+body{
+  overflow: auto;
 }
 
-.banner form{
-    float:right;
-    padding:40px;
+/* CSS for banner */
+.banner {
+  background-color: lightgrey;
+  font-size: 150%;
+  text-align: center;
+  position: fixed;
+  top: 0%;
+  width: 100%;
+  left: 0%;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.banner a{
-    float:left;
-    padding: 40px;
-    font-size: medium;
-    text-decoration: none;
-    color: black;
+.banner form {
+  float: right;
+  margin: 45px;
+  padding-left: 10px;
 }
 
-.banner_nav{
-    display: inline-block;
+.banner h1,
+input {
+  display: inline-block;
 }
 
-.banner a:hover{
-    background-color: grey;
+.banner a {
+  float: left;
+  padding: 45px;
+  color: black;
+  text-decoration: none;
+}
+
+.banner a:hover {
+  background-color: grey;
+}
+
+/* CSS for main */
+
+.main {
+  margin-top: 100px;
+  width: 100%;
+  position: fixed;
+  left: 0%;
+  overflow: auto;
+  height: 100%;
+}
+
+/* CSS for question page  */
+
+.question_header {
+  width: 100%;
+  padding-top: 10px;
+  font-size: 75%;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.column {
+  float: left;
+}
+
+.column.side {
+  width: 25%;
+}
+
+.column.middle {
+  width: 50%;
+}
+
+.column form {
+  margin: 5px;
+}
+
+.question_display {
+  padding-top: 80px;
+}
+
+.question_display table {
+  margin-left: 0px;
+}
+
+.question_display a {
+  text-decoration: none;
+}
+
+.question_display td {
+  border-bottom: 1px dotted black;
+  font-size: large;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: left;
+  padding-right: 50px;
+  padding-bottom: 20px;
+  padding-top: 10px;
+}
+
+.tag_container {
+  padding-top: 5px;
+  display: inline-grid;
+  grid-template-columns: auto auto auto auto;
+  column-gap: 10px;
+  row-gap: 10px;
+}
+
+/* CSS for New Questions Page */
+
+.new_question {
+  padding-top: 20px;
+  padding-left: 20px;
+}
+
+.new_question h1,
+h2 {
+  font-weight: normal;
+  font-family: "Times New Roman", Times, serif;
+}
+
+/* CSS for Answer Page */
+
+.answer_header{
+  width: 100%;
+  padding-top: 10px;
+  font-size: 75%;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.answer_table{
+  width: 100%;
+}
+
+.answer_table td,th{
+  border-bottom: 1px dotted black;
+  font-size:large;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: left;
+  padding-right: 50px;
+  padding-bottom: 20px;
+  padding-top: 10px;
+}
+
+.first_row th{
+  padding-left: 20px;
+  padding-top: 50px;
+}
+
+/* CSS for Answering Page */
+
+.answer_text{
+  padding-top: 50px;
+  padding-left: 20px;
+}
+
+.answer_user{
+  padding-top: 50px;
+  padding-left: 20px;
+}
+
+/* CSS for Tags Link */
+
+.tags_link_container{
+  display: inline-grid; 
+  grid-template-columns: auto auto auto;
+  column-gap: 100px;
+  row-gap: 100px;
+  text-align: center;
+  margin-left: 30%;
+  margin-top: 5%;
+}
+
+.linkdiv{
+  border: 1px solid black;
 }
