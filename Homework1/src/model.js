@@ -85,5 +85,186 @@ export default class Model {
     };
   }
 
-  // add relevant methods here.
+  // Finds the question data from name
+  getDatafromName(name){
+    for(let i=0;i<this.data.questions.length;i++){
+      if(this.data.questions[i].title==name){
+        return this.data.questions[i];
+      }
+    }
+  }
+
+  // Get the name from tid
+  getNamefromTid(tid) {
+    for (let i = 0; i < this.data.tags.length; i++) {
+      if (this.data.tags[i].tid == tid) {
+        return this.data.tags[i].name;
+      }
+    }
+  }
+
+  // Get tid from the name
+  getTidfromName(name) {
+    for (let i = 0; i < this.data.tags.length; i++) {
+      if (this.data.tags[i].name == name) {
+        return this.data.tags[i].tid;
+      }
+    }
+    return -1;
+  }
+
+  // Adds a new Question if valid
+  updateQuestions() {
+    const arr = [];
+    const title = document.getElementById("title_box").value;
+    const text = document.getElementById("text_box").value;
+    const tags = document.getElementById("tag_box").value;
+    const user = document.getElementById("user_box").value;
+
+    var tag = [];
+
+    if (!title.trim() || title.length == 0) {
+      arr.push("Title cannot be empty!");
+    }
+    if (title.length > 100) {
+      arr.push("Title cannot be more than 100 characters!");
+    }
+
+    if (!text.trim() || text.length == 0) {
+      arr.push("Text cannot be empty!");
+    }
+
+    if (!tags.trim() || tags.length == 0) {
+      arr.push("Tags cannot be empty!");
+    } else {
+      const curr_tags = tags.split(" ");
+      for (let i = 0; i < curr_tags.length; i++) {
+        var tid = this.getTidfromName(curr_tags[i]);
+        if (tid != -1 && !tag.includes(tid)) {
+          tag.push(tid);
+        } 
+        if(tid!=-1 && tag.includes(tid)){
+          continue;
+        }
+        if(tid==-1){
+          this.data.tags.push({
+            tid: "t" + (this.data.tags.length + 1),
+            name: curr_tags[i],
+          });
+          tag.push("t" + this.data.tags.length);
+        }
+      }
+    }
+    if (user.length > 15) {
+      arr.push("Username cannot be more than 15 characters!");
+    }
+
+    if (arr.length == 0) {
+      var curr_date = new Date();
+      const new_question = {
+        qid: "q" + (this.data.questions.length + 1),
+        title: title,
+        text: text,
+        tagIds: tag,
+        askedBy: user,
+        askedOn:
+          curr_date.toLocaleString("en-us", { month: "short" }) +
+          " " +
+          curr_date.getDate() +
+          ", " +
+          curr_date.getFullYear(),
+        askedAt: curr_date.getHours() + ":" + curr_date.getMinutes(),
+        answers: [],
+        views: 0,
+      };
+      this.data.questions.push(new_question);
+    }
+    return arr;
+  }
+
+  queryQuestion(question){
+    if(question==""){
+      return [];
+    }
+    const r_arr=[];
+    const question_map=new Map();
+    this.data.questions.forEach(function(value){
+      question_map.set(value.title,value.tagIds);
+    });
+    const args=question.split(" ");
+    for(let i=0;i<args.length;i++){
+      if(r_arr.length==question_map.size){
+        return this.data.questions;
+      }
+      if(args[i].substr(0,1)=="[" && args[i].substr(args[i].length-1,args[i].length)=="]"){
+        const tag=this.getTidfromName(args[i].replace("[","").replace("]",""));
+        question_map.forEach(query);
+        function query(value,key){
+          for(let j=0;j<value.length;j++){
+            if(value[j]==tag && !r_arr.includes(key)){
+              r_arr.push(key);
+            }
+          }
+        }
+      }else{
+        question_map.forEach(query);
+        function query(value,key){
+          if(key.indexOf(args[i])!=-1){
+            if(!r_arr.includes(key)){
+              r_arr.push(key);
+            }
+          }
+        }
+      }
+    }
+    return r_arr;
+  }
+
+  updateView(name){
+    for(let i=0;i<this.data.questions.length;i++){
+      if(this.data.questions[i].title==name){
+        this.data.questions[i].views=this.data.questions[i].views+1;
+      }
+    }
+  }
+
+  updateAnswers(prev){
+    const arr=[];
+    const text=document.getElementById("text_box").value;
+    const user=document.getElementById("user_box").value;
+
+    if(!text.trim() || text.length==0){
+      arr.push("Text cannot be empty!");
+    }
+    if(!user.trim()|| user.length==0){
+      arr.push("User cannot be empty!");
+    }
+    if(user.length>15){
+      arr.push("Username cannot be more than 15 characters!");
+    }
+
+    if (arr.length == 0) {
+      var curr_date = new Date();
+      const new_answer = {
+        aid: "a" + (this.data.answers.length + 1),
+        text: text,
+        ansBy: user,
+        ansOn:
+          curr_date.toLocaleString("en-us", { month: "short" }) +
+          " " +
+          curr_date.getDate() +
+          ", " +
+          curr_date.getFullYear(),
+        ansAt: curr_date.getHours() + ":" + curr_date.getMinutes()
+      };
+      this.data.answers.push(new_answer);
+      for(let i=0;i<this.data.questions.length;i++){
+        if(this.data.questions[i].title==prev.innerHTML){
+          this.data.questions[i].answers.push("a"+(this.data.answers.length));
+        }
+      }
+    }
+    return arr;
+  }
+
 }
